@@ -39,10 +39,10 @@ switch($options[xPDOTransport::PACKAGE_ACTION]) {
         }
         $modx->log($level, '- Commerce installed: ' . ($installed ? 'yes' : 'no'));
         if ($commerce instanceof Commerce) {
-            $installed = version_compare((string)$commerce->version, '0.11.0') < 0;
+            $installed = version_compare((string)$commerce->version, '0.11.0') > 0;
             $level = $installed ? xPDO::LOG_LEVEL_INFO : xPDO::LOG_LEVEL_ERROR;
             $success = false;
-            $modx->log($level, '- Commerce version 0.11+: ' . ($installed ? 'yes' : 'no'));
+            $modx->log($level, '- Commerce version 0.11+: ' . (string)$commerce->version);
         }
 
         if ($success) {
