@@ -1,5 +1,5 @@
-++ UserGroupShipment for Commerce 1.0.0-rc2
-++ Released on 2018-02-01
+++ UserGroupShipment for Commerce 1.0.0-pl
+++ Released on 2018-04-06
 ++++++++++++++++++++++++++
 - Fix issue in requirements check preventing all installations, even with Commerce 0.11 installed
 
