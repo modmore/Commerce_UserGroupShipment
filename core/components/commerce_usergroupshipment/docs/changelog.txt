@@ -1,9 +1,17 @@
-++ UserGroupShipment for Commerce 1.0.0-pl
-++ Released on 2018-04-06
-++++++++++++++++++++++++++
+UserGroupShipment for Commerce 1.0.1-pl
+-----------------------------------------
+Released on 2020-09-15
+
+- Optimize autoloader to avoid class loading issue
+
+UserGroupShipment for Commerce 1.0.0-pl
+-----------------------------------------
+Released on 2018-04-06
+
 - Fix issue in requirements check preventing all installations, even with Commerce 0.11 installed
 
-++ UserGroupShipment for Commerce 1.0.0-rc2
-++ Released on 2018-02-01
-++++++++++++++++++++++++++
+UserGroupShipment for Commerce 1.0.0-rc1
+-----------------------------------------
+Released on 2018-02-01
+
 - First public release. Note that this package relies on Commerce 0.11, which at this point in time has not yet been released.
