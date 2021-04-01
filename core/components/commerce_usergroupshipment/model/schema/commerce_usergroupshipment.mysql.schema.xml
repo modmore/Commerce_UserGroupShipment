@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model package="commerce_usergroupshipment" baseClass="comSimpleObject" platform="mysql" defaultEngine="MyISAM" version="1.1">
+<model package="commerce_usergroupshipment" baseClass="comSimpleObject" platform="mysql" defaultEngine="InnoDB" version="1.1">
     <object class="UserGroupShipment" extends="comOrderShipment" />
+    <object class="UserGroupStatusChangeAction" extends="comStatusChangeAction" />
 </model>

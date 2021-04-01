@@ -1,4 +1,6 @@
 <?php
+
+use modmore\Commerce\Admin\Widgets\Form\CheckboxField;
 use modmore\Commerce\Admin\Widgets\Form\ClassField;
 use modmore\Commerce\Admin\Widgets\Form\SelectMultipleField;
 
@@ -31,7 +33,14 @@ class UserGroupShipment extends comOrderShipment
 
     public static function getFieldsForDeliveryType(Commerce $commerce, comDeliveryType $deliveryType)
     {
-        return [];
+        $fields = [];
+        $fields[] = new CheckboxField($commerce, [
+            'name' => 'properties[run_automatically]',
+            'label' => 'Run automatically when an order is moved to processing',
+            'description' => 'When disabled, you need to edit your status workflow to add the User Group Shipment processing to the status change you want to run it in.',
+            'value' => $deliveryType->getProperty('run_ugs_automatically', true),
+        ]);
+        return $fields;
     }
 
     /**
@@ -52,26 +61,13 @@ class UserGroupShipment extends comOrderShipment
             return false;
         }
 
-        $groups = [];
-        foreach ($this->getItems() as $item) {
-            if ($product = $item->getProduct()) {
-                $value = $product->getProperty('usergroup');
-                // it might or might not be an array, due to this: https://github.com/modmore/Commerce/issues/425
-                // let's make sure it's definitely an array.
-                if(!is_array($value)) {
-                  $value = explode(',', $value);
-                }
-                // remove blank
-                $value = array_filter($value);
-                $groups = array_merge($groups, $value);
-            }
+        $deliveryType = $this->getDeliveryType();
+        if ($deliveryType && !$deliveryType->getProperty('run_ugs_automatically', true)) {
+            return false;
         }
-        $groups = array_map('intval', $groups);
-        $groups = array_unique($groups);
 
-        foreach ($groups as $group) {
-            $user->joinGroup($group);
-        }
+        \modmore\Commerce\UserGroupShipment\Modules\UserGroupShipment::process($user, $this);
+
         return true;
     }
 

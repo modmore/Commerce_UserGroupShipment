@@ -1,5 +1,6 @@
 <?php
 namespace modmore\Commerce\UserGroupShipment\Modules;
+use modmore\Commerce\Admin\Widgets\Form\CheckboxField;
 use modmore\Commerce\Modules\BaseModule;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -35,5 +36,29 @@ class UserGroupShipment extends BaseModule {
 
         // As we have static methods, the class has to be loaded
         $this->adapter->loadClass('UserGroupShipment', $path . 'commerce_usergroupshipment/');
+    }
+
+    public static function process(\modUser $user, \UserGroupShipment $shipment)
+    {
+        $groups = [];
+        foreach ($shipment->getItems() as $item) {
+            if ($product = $item->getProduct()) {
+                $value = $product->getProperty('usergroup');
+                // it might or might not be an array, due to this: https://github.com/modmore/Commerce/issues/425
+                // let's make sure it's definitely an array.
+                if(!is_array($value)) {
+                    $value = explode(',', $value);
+                }
+                // remove blank
+                $value = array_filter($value);
+                $groups = array_merge($groups, $value);
+            }
+        }
+        $groups = array_map('intval', $groups);
+        $groups = array_unique($groups);
+
+        foreach ($groups as $group) {
+            $user->joinGroup($group);
+        }
     }
 }

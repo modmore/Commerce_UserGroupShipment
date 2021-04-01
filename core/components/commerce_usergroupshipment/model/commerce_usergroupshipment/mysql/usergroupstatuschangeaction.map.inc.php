@@ -10,10 +10,10 @@
  * @license See core/components/commerce_usergroupshipment/docs/license.txt
  */
 
-$xpdo_meta_map['UserGroupShipment']= array (
+$xpdo_meta_map['UserGroupStatusChangeAction']= array (
   'package' => 'commerce_usergroupshipment',
   'version' => '1.1',
-  'extends' => 'comOrderShipment',
+  'extends' => 'comStatusChangeAction',
   'tableMeta' => 
   array (
     'engine' => 'InnoDB',

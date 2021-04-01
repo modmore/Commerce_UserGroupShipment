@@ -1,4 +1,5 @@
 <?php
+require_once strtr(realpath(dirname(dirname(__FILE__))), '\\', '/') . '/usergroupstatuschangeaction.class.php';
 /**
  * UserGroupShipment for Commerce.
  *
@@ -9,19 +10,7 @@
  * @package commerce_usergroupshipment
  * @license See core/components/commerce_usergroupshipment/docs/license.txt
  */
+class UserGroupStatusChangeAction_mysql extends UserGroupStatusChangeAction
+{
 
-$xpdo_meta_map['UserGroupShipment']= array (
-  'package' => 'commerce_usergroupshipment',
-  'version' => '1.1',
-  'extends' => 'comOrderShipment',
-  'tableMeta' => 
-  array (
-    'engine' => 'InnoDB',
-  ),
-  'fields' => 
-  array (
-  ),
-  'fieldMeta' => 
-  array (
-  ),
-);
+}
