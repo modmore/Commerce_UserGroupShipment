@@ -1,6 +1,6 @@
 <?php
 use modmore\Commerce\Admin\Widgets\Form\ClassField;
-use modmore\Commerce\Admin\Widgets\Form\SelectField;
+use modmore\Commerce\Admin\Widgets\Form\SelectMultipleField;
 
 /**
  * UserGroupShipment for Commerce.
@@ -18,7 +18,7 @@ class UserGroupShipment extends comOrderShipment
     {
         $fields = [];
 
-        $fields[] = new SelectField($commerce, [
+        $fields[] = new SelectMultipleField($commerce, [
             'name' => 'properties[usergroup]',
             'label' => 'User Group',
             'description' => 'The user group to grant customers access to when they\'ve bought this product.',
@@ -55,7 +55,15 @@ class UserGroupShipment extends comOrderShipment
         $groups = [];
         foreach ($this->getItems() as $item) {
             if ($product = $item->getProduct()) {
-                $groups[] = $product->getProperty('usergroup');
+                $value = $product->getProperty('usergroup');
+                // it might or might not be an array, due to this: https://github.com/modmore/Commerce/issues/425
+                // let's make sure it's definitely an array.
+                if(!is_array($value)) {
+                  $value = explode(',', $value);
+                }
+                // remove blank
+                $value = array_filter($value);
+                $groups = array_merge($groups, $value);
             }
         }
         $groups = array_map('intval', $groups);
