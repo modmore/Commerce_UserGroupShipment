@@ -22,8 +22,8 @@ class UserGroupShipment extends comOrderShipment
 
         $fields[] = new SelectMultipleField($commerce, [
             'name' => 'properties[usergroup]',
-            'label' => 'User Group',
-            'description' => 'The user group to grant customers access to when they\'ve bought this product.',
+            'label' => $commerce->adapter->lexicon('commerce_usergroupshipment.user_group'),
+            'description' => $commerce->adapter->lexicon('commerce_usergroupshipment.user_group.description'),
             'value' => $product->getProperty('usergroup'),
             'optionsClass' => 'modUserGroup',
         ]);
@@ -36,8 +36,8 @@ class UserGroupShipment extends comOrderShipment
         $fields = [];
         $fields[] = new CheckboxField($commerce, [
             'name' => 'properties[run_ugs_automatically]',
-            'label' => 'Run automatically when an order is moved to processing',
-            'description' => 'When disabled, you need to edit your status workflow to add the User Group Shipment processing to the status change you want to run it in.',
+            'label' => $commerce->adapter->lexicon('commerce_usergroupshipment.run_ugs_automatically'),
+            'description' => $commerce->adapter->lexicon('commerce_usergroupshipment.run_ugs_automatically.description'),
             'value' => $deliveryType->getProperty('run_ugs_automatically', true),
         ]);
         return $fields;
