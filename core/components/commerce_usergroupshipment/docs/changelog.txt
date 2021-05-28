@@ -1,3 +1,10 @@
+UserGroupShipment for Commerce 1.1.0-pl
+-----------------------------------------
+Released on 2021-05-28
+
+- You can now change when the user is assigned to a usergroup. Either when the order is processed (previous behavior, default), or during another status change by configuring the new status change action to indicate when it should run.
+
+
 UserGroupShipment for Commerce 1.0.1-pl
 -----------------------------------------
 Released on 2020-09-15
