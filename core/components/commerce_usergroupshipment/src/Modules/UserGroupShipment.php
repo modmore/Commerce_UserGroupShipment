@@ -60,5 +60,12 @@ class UserGroupShipment extends BaseModule {
         foreach ($groups as $group) {
             $user->joinGroup($group);
         }
+
+        // get the current context from the order
+        $order = $shipment->getOrder();
+        $ctx = $order ? $order->get('context') : 'web';
+
+        // refresh the users' attributes (permissions)
+        $user->getAttributes([], $ctx, true);
     }
 }

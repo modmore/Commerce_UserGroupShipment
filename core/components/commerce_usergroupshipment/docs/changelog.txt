@@ -1,3 +1,9 @@
+UserGroupShipment for Commerce 1.1.1-pl
+-----------------------------------------
+Released on 2022-01-21
+
+- Make sure user permissions are reloaded after user groups are assigned
+
 UserGroupShipment for Commerce 1.1.0-pl
 -----------------------------------------
 Released on 2021-05-28
