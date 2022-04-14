@@ -1,4 +1,7 @@
 <?php
+
+use MODX\Revolution\modUser;
+
 /**
  * UserGroupShipment for Commerce.
  *
@@ -11,7 +14,7 @@
  */
 class UserGroupStatusChangeAction extends comStatusChangeAction
 {
-    public function process(comOrder $order, comStatus $oldStatus, comStatus $newStatus, comStatusChange $statusChange)
+    public function process(comOrder $order, comStatus $oldStatus, comStatus $newStatus, comStatusChange $statusChange): bool
     {
         $shipments = $order->getShipments();
 

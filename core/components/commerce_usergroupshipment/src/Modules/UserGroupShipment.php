@@ -1,10 +1,11 @@
 <?php
 namespace modmore\Commerce\UserGroupShipment\Modules;
-use modmore\Commerce\Admin\Widgets\Form\CheckboxField;
+
 use modmore\Commerce\Modules\BaseModule;
+use MODX\Revolution\modUser;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-require_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 class UserGroupShipment extends BaseModule {
 
@@ -35,11 +36,15 @@ class UserGroupShipment extends BaseModule {
         $this->adapter->loadPackage('commerce_usergroupshipment', $path);
 
         // As we have static methods, the class has to be loaded
-        $this->adapter->loadClass('UserGroupShipment', $path . 'commerce_usergroupshipment/');
+        $this->adapter->loadClass(\UserGroupShipment::class, $path . 'commerce_usergroupshipment/');
     }
 
-    public static function process(\modUser $user, \UserGroupShipment $shipment)
+    public static function process($user, \UserGroupShipment $shipment)
     {
+        if (!($user instanceof modUser || $user instanceof \modUser)) {
+            throw new \InvalidArgumentException('Expected modUser, got ' . get_class($user));
+        }
+        
         $groups = [];
         foreach ($shipment->getItems() as $item) {
             if ($product = $item->getProduct()) {
