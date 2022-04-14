@@ -22,8 +22,9 @@ class UserGroupStatusChangeAction extends comStatusChangeAction
         if ($userId < 1) {
             return false;
         }
-        /** @var modUser $user */
-        $user = $this->adapter->getObject('modUser', ['id' => $userId]);
+
+        $modUserClass = class_exists(modUser::class) ? modUser::class : \modUser::class;
+        $user = $this->adapter->getObject($modUserClass, ['id' => $userId]);
         if (!$user) {
             return false;
         }

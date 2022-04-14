@@ -26,7 +26,7 @@ class UserGroupShipment extends comOrderShipment
             'label' => $commerce->adapter->lexicon('commerce_usergroupshipment.user_group'),
             'description' => $commerce->adapter->lexicon('commerce_usergroupshipment.user_group.description'),
             'value' => $product->getProperty('usergroup'),
-            'optionsClass' => modUserGroup::class,
+            'optionsClass' => class_exists(modUserGroup::class) ? modUserGroup::class : \modUserGroup::class
         ]);
 
         return $fields;
@@ -56,8 +56,9 @@ class UserGroupShipment extends comOrderShipment
         if ($userId < 1) {
             return false;
         }
-        /** @var modUser $user */
-        $user = $this->adapter->getObject(modUser::class, ['id' => $userId]);
+        
+        $modUserClass = class_exists(modUser::class) ? modUser::class : \modUser::class;
+        $user = $this->adapter->getObject($modUserClass, ['id' => $userId]);
         if (!$user) {
             return false;
         }
