@@ -23,8 +23,8 @@ if (!defined('MOREPROVIDER_BUILD')) {
     /* define version */
     define('PKG_NAME', 'Commerce_UserGroupShipment');
     define('PKG_NAMESPACE', 'commerce_usergroupshipment');
-    define('PKG_VERSION', '1.0.0');
-    define('PKG_RELEASE', 'rc1');
+    define('PKG_VERSION', '1.2.0');
+    define('PKG_RELEASE', 'pl');
 
     /* load modx */
     require_once dirname(dirname(__FILE__)) . '/config.core.php';
