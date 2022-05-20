@@ -1,8 +1,9 @@
 <?php
 
 use modmore\Commerce\Admin\Widgets\Form\CheckboxField;
-use modmore\Commerce\Admin\Widgets\Form\ClassField;
 use modmore\Commerce\Admin\Widgets\Form\SelectMultipleField;
+use MODX\Revolution\modUser;
+use MODX\Revolution\modUserGroup;
 
 /**
  * UserGroupShipment for Commerce.
@@ -16,7 +17,7 @@ use modmore\Commerce\Admin\Widgets\Form\SelectMultipleField;
  */
 class UserGroupShipment extends comOrderShipment
 {
-    public static function getFieldsForProduct(Commerce $commerce, comProduct $product, comDeliveryType $deliveryType)
+    public static function getFieldsForProduct(Commerce $commerce, comProduct $product, comDeliveryType $deliveryType): array
     {
         $fields = [];
 
@@ -25,13 +26,13 @@ class UserGroupShipment extends comOrderShipment
             'label' => $commerce->adapter->lexicon('commerce_usergroupshipment.user_group'),
             'description' => $commerce->adapter->lexicon('commerce_usergroupshipment.user_group.description'),
             'value' => $product->getProperty('usergroup'),
-            'optionsClass' => 'modUserGroup',
+            'optionsClass' => class_exists(modUserGroup::class) ? modUserGroup::class : \modUserGroup::class
         ]);
 
         return $fields;
     }
 
-    public static function getFieldsForDeliveryType(Commerce $commerce, comDeliveryType $deliveryType)
+    public static function getFieldsForDeliveryType(Commerce $commerce, comDeliveryType $deliveryType): array
     {
         $fields = [];
         $fields[] = new CheckboxField($commerce, [
@@ -46,7 +47,7 @@ class UserGroupShipment extends comOrderShipment
     /**
      * @return bool
      */
-    public function onOrderStateProcessing()
+    public function onOrderStateProcessing(): bool
     {
         if (!$order = $this->getOrder()) {
             return false;
@@ -55,8 +56,9 @@ class UserGroupShipment extends comOrderShipment
         if ($userId < 1) {
             return false;
         }
-        /** @var modUser $user */
-        $user = $this->adapter->getObject('modUser', ['id' => $userId]);
+        
+        $modUserClass = class_exists(modUser::class) ? modUser::class : \modUser::class;
+        $user = $this->adapter->getObject($modUserClass, ['id' => $userId]);
         if (!$user) {
             return false;
         }
